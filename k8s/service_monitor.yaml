@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: job-monitor
+  namespace: namespace
+spec:
+  selector:
+    matchLabels:
+      project: test
+      role: backend
+      app: job-monitor
+  endpoints:
+      - port: http
+        path: /
+

@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: job-monitor
+  namespace: namespace
+  labels:
+    project: test
+    role: backend
+    app: job-monitor
+spec:
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+  selector:
+    project: test
+    role: backend
+    app: job-monitor
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: job-monitor
+  namespace: namespace
+  labels:
+    project: test
+    role: backend
+    app: job-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: test
+      role: backend
+      app: job-monitor
+  template:
+    metadata:
+      labels:
+        project: test
+        role: backend
+        app: job-monitor
+    spec:
+      containers:
+        - name: job-monitor
+          image: image:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100M"
+              cpu: 1
+            limits:
+              memory: "200M"
+              cpu: 1
+          ports:
+            - containerPort: 8000
+              name: http

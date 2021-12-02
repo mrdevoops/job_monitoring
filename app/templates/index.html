@@ -1,0 +1,10 @@
+<html>
+    <head>
+        <title>{{ title }} - Microblog</title>
+    </head>
+    <body>
+        {% for name, status in status_cron_jobs.items() %}
+        cron_job_failures{{ "{" }}namespace="{{ namespace }}", job_name="{{ name }}"{{ "}" }} {{ status }}<br/>
+        {% endfor %}
+    </body>
+</html>
